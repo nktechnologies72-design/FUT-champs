@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Pocket XI</title>
+    <link rel="stylesheet" href="styles.css?v=20260527-4" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <aside class="side-rail" aria-label="Primary">
+        <div class="brand">
+          <span class="brand-mark">PXI</span>
+          <span>
+            <strong>Pocket XI</strong>
+            <small>Ultimate club</small>
+          </span>
+        </div>
+        <nav class="nav-tabs" aria-label="Game sections">
+          <button class="nav-tab is-active" data-view="home" title="Home">Home</button>
+          <button class="nav-tab" data-view="squad" title="Team">Team</button>
+          <button class="nav-tab" data-view="packs" title="Store">Store</button>
+          <button class="nav-tab" data-view="market" title="Market">Market</button>
+          <button class="nav-tab" data-view="match" title="Match">Play</button>
+        </nav>
+      </aside>
+
+      <main class="game-stage">
+        <header class="topbar">
+          <div>
+            <p class="eyebrow">Season Zero</p>
+            <h1 id="screenTitle">Club Central</h1>
+            <p class="version-tag">Build 2026.05.27.4</p>
+          </div>
+          <div class="wallet">
+            <span>Coins</span>
+            <strong id="coinCount">0</strong>
+          </div>
+        </header>
+
+        <section class="view is-active" id="homeView" data-view-panel="home">
+          <div class="dashboard-grid">
+            <article class="club-panel pitch-hero">
+              <div>
+                <p class="eyebrow">Ready squad</p>
+                <h2 id="clubName">Metro Strikers</h2>
+                <p class="muted">Build chemistry, train prospects, trade smart, then take the XI into quick attack matches.</p>
+              </div>
+              <div class="rating-ring">
+                <span id="teamRating">0</span>
+                <small>OVR</small>
+              </div>
+            </article>
+
+            <article class="club-panel stat-panel">
+              <h2>Club Status</h2>
+              <div class="stat-grid">
+                <span>Level</span><strong id="clubLevel">1</strong>
+                <span>Division</span><strong id="clubDivision">10</strong>
+                <span>Chemistry</span><strong id="teamChemistry">0</strong>
+                <span>Season Points</span><strong id="seasonPoints">0</strong>
+              </div>
+              <div class="progress-track"><span id="xpBar"></span></div>
+            </article>
+
+            <article class="club-panel">
+              <h2>Club Objectives</h2>
+              <div class="objective-list" id="objectiveList"></div>
+            </article>
+
+            <article class="club-panel">
+              <h2>Match Rewards</h2>
+              <p class="muted">Win quick matches to earn coins, XP, division progress, and form boosts.</p>
+              <button class="primary-action" data-jump="match">Play Match</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="squadView" data-view-panel="squad">
+          <div class="squad-layout">
+            <div class="formation-board" id="formationBoard" aria-label="Starting eleven"></div>
+            <aside class="club-panel squad-side">
+              <h2>Squad Tools</h2>
+              <div class="tool-row">
+                <button class="secondary-action" id="autoSquadBtn">Auto XI</button>
+                <button class="secondary-action" id="trainBtn">Train</button>
+              </div>
+              <p class="muted" id="squadHint">Select a starter, then swap or train.</p>
+              <h2>Bench</h2>
+              <div class="player-list" id="benchList"></div>
+            </aside>
+          </div>
+        </section>
+
+        <section class="view" id="packsView" data-view-panel="packs">
+          <div class="packs-layout">
+            <article class="pack-card">
+              <div class="pack-art">PXI</div>
+              <h2>Pack Store</h2>
+              <p class="muted">Open packs for players, training boosts, and club XP.</p>
+              <button class="primary-action" data-pack="gold">Gold Pack 750</button>
+              <button class="secondary-action" data-pack="elite">Elite Pack 2,500</button>
+            </article>
+            <div class="club-panel">
+              <h2>Pack Reveal</h2>
+              <div class="reveal-grid" id="packReveal"></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="view" id="marketView" data-view-panel="market">
+          <div class="market-toolbar">
+            <div>
+              <p class="eyebrow">Live listings</p>
+              <h2>Transfer Market</h2>
+            </div>
+            <select id="marketFilter" aria-label="Filter market">
+              <option value="ALL">All positions</option>
+              <option value="ST">ST</option>
+              <option value="MID">MID</option>
+              <option value="DEF">DEF</option>
+              <option value="GK">GK</option>
+            </select>
+            <button class="secondary-action compact-action" id="refreshMarketBtn">Refresh</button>
+          </div>
+          <div class="market-grid" id="marketGrid"></div>
+        </section>
+
+        <section class="view" id="matchView" data-view-panel="match">
+          <div class="match-layout">
+            <div class="match-wrap">
+              <canvas id="matchCanvas" width="960" height="560" aria-label="Football match canvas"></canvas>
+              <div class="touch-controls" aria-label="Match controls">
+                <button data-control="left">Left</button>
+                <button data-control="skill">Skill</button>
+                <button data-control="shoot">Shoot</button>
+                <button data-control="right">Right</button>
+              </div>
+            </div>
+            <aside class="club-panel match-panel">
+              <h2>Quick Attack</h2>
+              <div class="scoreline">
+                <span>You</span>
+                <strong id="playerScore">0</strong>
+                <span>Rivals</span>
+                <strong id="rivalScore">0</strong>
+              </div>
+              <div class="stat-grid match-stats">
+                <span>Chances</span><strong id="chanceCount">0</strong>
+                <span>Power</span><strong id="attackPower">0</strong>
+                <span>Streak</span><strong id="winStreak">0</strong>
+              </div>
+              <p class="muted" id="matchStatus">Move the striker, use skill, time the shot, and beat the keeper.</p>
+              <button class="primary-action" id="startMatchBtn">Start Match</button>
+            </aside>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <script>
+      window.pxiFallbackShowView = function (view) {
+        document.querySelectorAll(".nav-tab").forEach(function (button) {
+          button.classList.toggle("is-active", button.dataset.view === view);
+        });
+        document.querySelectorAll(".view").forEach(function (panel) {
+          panel.classList.toggle("is-active", panel.dataset.viewPanel === view);
+        });
+        var title = document.querySelector("#screenTitle");
+        if (title) {
+          title.textContent = {
+            home: "Club Central",
+            squad: "Squad Builder",
+            packs: "Pack Store",
+            market: "Transfer Market",
+            match: "Quick Attack",
+          }[view] || "Club Central";
+        }
+      };
+      document.querySelectorAll(".nav-tab").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.pxiFallbackShowView(button.dataset.view);
+        });
+      });
+      document.querySelectorAll("[data-jump]").forEach(function (button) {
+        button.addEventListener("click", function () {
+          window.pxiFallbackShowView(button.dataset.jump);
+        });
+      });
+    </script>
+    <script src="app.js?v=20260527-4"></script>
+  </body>
+</html>
